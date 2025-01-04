@@ -1,8 +1,8 @@
 .PHONY: all clean fclean re val norm
 NAME = pipex
 
-# LIBFT_DIR = libft
-# LIBFT_A = libft.a
+LIBFT_DIR = libft
+LIBFT_A = libft.a
 
 INCLUDE_DIR = include
 SRCS_DIR = srcs
@@ -20,6 +20,7 @@ WHITE = \033[37m
 SRCS = \
 $(addsuffix .c, \
 	$(addprefix $(SRCS_DIR)/, \
+		env \
 		main \
 	) \
 ) \
@@ -30,8 +31,8 @@ DEPS = $(addprefix $(OUT_DIR)/, $(SRCS:.c=.d))
 NPD_FLAG = --no-print-directory
 
 CFLAGS = -Wall -Werror -Wextra
-IFLAGS = -I/usr/$(INCLUDE_DIR) -I$(INCLUDE_DIR) # -I$(LIBFT_DIR)/$(INCLUDE_DIR)
-# LFLAGS = -L$(LIBFT_DIR) -lft
+IFLAGS = -I/usr/$(INCLUDE_DIR) -I$(INCLUDE_DIR) -I$(LIBFT_DIR)/$(INCLUDE_DIR)
+LFLAGS = -L$(LIBFT_DIR) -lft
 VFLAGS = \
 	--leak-check=full \
 	--show-leak-kinds=all \
@@ -42,19 +43,19 @@ all: $(NAME)
 $(NAME): $(LIBFT_DIR)/$(LIBFT_A) | $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) -o $@
 
-# $(LIBFT_DIR)/$(LIBFT_A):
-# 	@make $(NPD_FLAG) -C $(LIBFT_DIR) all
+$(LIBFT_DIR)/$(LIBFT_A):
+	@make $(NPD_FLAG) -C $(LIBFT_DIR) extend
 
 $(OUT_DIR)/%.o: %.c
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 clean:
-# @make $(NPD_FLAG) -C $(LIBFT_DIR) clean
+	@make $(NPD_FLAG) -C $(LIBFT_DIR) clean
 	@$(RM) -r $(OUT_DIR)
 
 fclean: clean
-# @$(RM) $(LIBFT_DIR)/$(LIBFT_A)
+	@$(RM) $(LIBFT_DIR)/$(LIBFT_A)
 	@$(RM) $(NAME) $(VALGRIND_LOG)
 
 re: fclean all
