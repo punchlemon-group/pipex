@@ -6,7 +6,7 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 18:12:27 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/05 05:33:35 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:23:26 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,5 @@ void	delete_env(void *env)
 {
 	free(((t_env *)env)->var);
 	free(((t_env *)env)->str);
+	free(env);
 }
