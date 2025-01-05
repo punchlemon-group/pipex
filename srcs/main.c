@@ -23,7 +23,6 @@ void	pipex_end(t_data *data, char *error_str, int status)
 
 void	make_child(t_data *data)
 {
-	t_env	*env;
 	pid_t	pid;
 
 	pid = fork();
@@ -31,8 +30,7 @@ void	make_child(t_data *data)
 		pipex_end(data, "fork", EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		env = (t_env *)(search_envs(data->envs, "PATH")->content);
-		print_env(env);
+		print_env(search_envs(data->envs, "PATH"));
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 18:12:27 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/05 05:19:42 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/05 05:26:32 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,13 @@ t_env	*search_envs(t_list *envs, char *var)
 
 void	print_env(t_env *env)
 {
-	ft_printf("var:%s", env->var);
-	ft_printf(", str:%s\n", env->str);
+	if (env)
+	{
+		ft_printf("var:%s", env->var);
+		ft_printf(", str:%s\n", env->str);
+	}
+	else
+		ft_printf("(NULL)\n");
 }
 
 void	delete_env(void *env)
