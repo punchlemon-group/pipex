@@ -6,7 +6,7 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 05:23:22 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/05 14:21:39 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:54:24 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,12 @@ char	*find_path(const char *cmd, char **path_dirs)
 	char	*old;
 
 	if (access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0 && ft_strchr(cmd, '/'))
-		return (ft_strdup(cmd));
+	{
+		new = ft_strdup(cmd);
+		if (new == NULL)
+			exit(1); // you should free resources
+		return (new);
+	}
 	if (path_dirs == NULL)
 		return (NULL);
 	old = NULL;
