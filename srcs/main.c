@@ -6,7 +6,7 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:12:30 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/05 14:15:19 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:34:40 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	pipex_end(t_data *data, char *error_str, int status)
 {
 	if (data->envs)
 		ft_lstclear(&data->envs, delete_env);
+	if (data->path_dirs)
+		delete_path_dirs(data->path_dirs);
 	if (error_str)
 		perror(error_str);
 	exit(status);
