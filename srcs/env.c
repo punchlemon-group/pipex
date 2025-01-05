@@ -6,7 +6,7 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 18:12:27 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/05 05:26:32 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/05 05:33:35 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ t_env	*create_env(char *envp_single)
 	return (env);
 }
 
-int	envs_init(t_data *data, char **envp)
+int	envs_init(t_list **envsp, char **envp)
 {
 	void	*content;
 	t_list	*new;
 	size_t	i;
 
-	data->envs = NULL;
+	*envsp = NULL;
 	i = 0;
 	while (envp[i])
 	{
@@ -53,7 +53,7 @@ int	envs_init(t_data *data, char **envp)
 		new = ft_lstnew(content);
 		if (!new)
 			return (delete_env(content), 1);
-		ft_lstadd_back(&data->envs, new);
+		ft_lstadd_back(envsp, new);
 		i++;
 	}
 	return (0);

@@ -22,6 +22,7 @@ $(addsuffix .c, \
 	$(addprefix $(SRCS_DIR)/, \
 		env \
 		main \
+		path \
 	) \
 ) \
 

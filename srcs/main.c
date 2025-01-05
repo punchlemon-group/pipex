@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "pipex.h"
 #include "env.h"
+#include "path.h"
 
 void	pipex_end(t_data *data, char *error_str, int status)
 {
@@ -30,7 +32,7 @@ void	make_child(t_data *data)
 		pipex_end(data, "fork", EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		print_env(search_envs(data->envs, "PATH"));
+		// print_env(search_envs(data->envs, "PATH"));
 	}
 	else
 	{
@@ -41,15 +43,28 @@ void	make_child(t_data *data)
 int	main(int argc, char **argv, char **envp)
 {
 	int		fd;
+	t_env	*path_env;
 	t_data	data;
 
-	if (envs_init(&data, envp))
+	if (envs_init(&data.envs, envp))
 		pipex_end(&data, "malloc", EXIT_FAILURE);
+	path_env = search_envs(data.envs, "PATH");
+	if (path_env)
+	{
+		if (paths_init(&data.paths, path_env->str))
+			pipex_end(&data, "malloc", EXIT_FAILURE);
+		// print_paths(data.paths);
+	}
+	else
+	{
+		// ft_printf("no path\n"); // temporaly
+	}
 	if (argc > 2)
 	{
 		fd = open(argv[1], O_RDONLY);
 		if (fd == -1)
 			pipex_end(&data, argv[1], EXIT_FAILURE);
+		ft_printf("path:%s\n", find_path(argv[2], data.paths));
 		make_child(&data);
 		close(fd);
 	}

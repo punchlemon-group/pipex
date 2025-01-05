@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   path.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 18:13:11 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/05 06:45:22 by retanaka         ###   ########.fr       */
+/*   Created: 2025/01/05 05:28:42 by retanaka          #+#    #+#             */
+/*   Updated: 2025/01/05 08:21:17 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#ifndef PATH_H
+# define PATH_H
 # include "libft.h"
 # include "ft_printf.h"
 
-typedef struct s_env
+typedef struct s_path
 {
-	char	*var;
-	char	*str;
-}	t_env;
+	char	*path;
+}	t_path;
 
-t_env	*create_env(char *envp_single);
-t_env	*search_envs(t_list *envs, char *var);
-int		envs_init(t_list **envsp, char **envp);
-void	print_env(t_env *env);
-void	delete_env(void *env);
+int		paths_init(char ***paths, char *str);
+void	print_paths(char **paths);
+char	*find_path(char *cmd, char **paths);
 
 #endif
