@@ -6,97 +6,82 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 18:12:27 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/05 08:05:26 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/05 05:10:32 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-void	env_init_single(t_env *env, char *envp_single)
+t_env	*create_env(char *envp_single)
 {
 	size_t	src_len;
 	size_t	var_len;
 	char	*equal_ptr;
+	t_env	*env;
 
+	env = malloc(sizeof(t_env));
+	if (!env)
+		return (NULL);
 	src_len = ft_strlen(envp_single);
 	equal_ptr = ft_strchr(envp_single, '=');
 	if (!equal_ptr)
-	{
-		env->var = ft_substr(envp_single, 0, src_len);
-		env->str = NULL;
-	}
+		var_len = src_len;
 	else
-	{
 		var_len = equal_ptr - envp_single;
-		env->var = ft_substr(envp_single, 0, var_len);
-		env->str = ft_substr(envp_single, var_len + 1, src_len - var_len - 1);
-	}
+	env->var = ft_substr(envp_single, 0, var_len);
+	if (!env->var)
+		return (free(env), NULL);
+	env->str = ft_substr(equal_ptr, 1, src_len);
+	if (!env->str)
+		return (free(env->var), free(env), NULL);
+	return (env);
 }
 
-void	env_init(t_data *data, char **envp)
+int	envs_init(t_data *data, char **envp)
 {
-	size_t	env_len;
-	// t_env	*env;
+	t_env	*content;
+	t_list	*new;
 	size_t	i;
 
-	env_len = 0;
-	while (envp[env_len])
-		env_len++;
-	data->env = malloc(sizeof(t_env) * (env_len + 1));
-	if (!data->env)
-		return ((void)0);
+	data->envs = NULL;
 	i = 0;
-	while (i < env_len + 1)
+	while (envp[i])
 	{
-		data->env[i].var = NULL;
-		data->env[i++].str = NULL;
-	}
-	i = 0;
-	while (i < env_len)
-	{
-		env_init_single(&(data->env[i]), envp[i]);
-		if (!data->env[i].var || !data->env[i].str)
-			return (delete_env(data->env), data->env = NULL, (void)0);
+		content = create_env(envp[i]);
+		if (!content)
+		{
+			// clear list
+		}
+		new = ft_lstnew(content);
+		if (!new)
+		{
+			// clear list
+		}
+		ft_lstadd_back(&data->envs, new);
 		i++;
 	}
+	return (0);
 }
 
-char	*search_env(t_env *env, char *var)
+t_env	*search_envs(t_list *envs, char *var)
 {
-	int	i;
-	
-	i = 0;
-	while (env[i].var)
+	while (envs != NULL)
 	{
-		if (ft_strncmp(env[i].var, var, 4) == 0)
-			return (env[i].str);
-		i++;
+		if (ft_strncmp(((t_env *)envs->content)->var, var, ft_strlen(var)) == 0)
+			return ((t_env *)envs->content);
+		envs = envs->next;
 	}
 	return (NULL);
 }
 
 void	print_env(t_env *env)
 {
-	size_t	i;
-
-	i = 0;
-	while (env[i].var)
-	{
-		ft_printf("var:%s", env[i].var);
-		ft_printf(", str:%s\n", env[i].str);
-		i++;
-	}
+	ft_printf("var:%s", env->var);
+	ft_printf(", str:%s\n", env->str);
 }
 
-void	delete_env(t_env *env)
+void	delete_env(void *env)
 {
-	size_t	i;
-
-	i = 0;
-	while (env[i].var)
-	{
-		free(env[i].var);
-		free(env[i].str);
-	}
-	free(env);
+	free(((t_env *)env)->var);
+	free(((t_env *)env)->str);
 }

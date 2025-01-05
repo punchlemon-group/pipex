@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "pipex.h"
+#include "env.h"
 
 void	pipex_end(t_data *data, char *error_str, int status)
 {
-	if (data->env)
-		delete_env(data->env);
+	if (data->envs)
+		ft_lstclear(&data->envs, delete_env);
 	if (error_str)
 		perror(error_str);
 	exit(status);
@@ -23,6 +23,7 @@ void	pipex_end(t_data *data, char *error_str, int status)
 
 void	make_child(t_data *data)
 {
+	t_env	*env;
 	pid_t	pid;
 
 	pid = fork();
@@ -30,7 +31,8 @@ void	make_child(t_data *data)
 		pipex_end(data, "fork", EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		ft_printf("%s\n", search_env(data->env, "PATH"));
+		env = (t_env *)(search_envs(data->envs, "PATH")->content);
+		print_env(env);
 	}
 	else
 	{
@@ -43,15 +45,14 @@ int	main(int argc, char **argv, char **envp)
 	int		fd;
 	t_data	data;
 
-	env_init(&data, envp);
-	// if (!data.env)
-	// 	pipex_end(&data, "malloc", EXIT_FAILURE);
-	// print_env(data.env);
-	if (argc > 1)
+	if (envs_init(&data, envp))
+		pipex_end(&data, "malloc", EXIT_FAILURE);
+	if (argc > 2)
 	{
 		fd = open(argv[1], O_RDONLY);
 		if (fd == -1)
 			pipex_end(&data, argv[1], EXIT_FAILURE);
+		make_child(&data);
 		close(fd);
 	}
 	return (pipex_end(&data, NULL, EXIT_SUCCESS), 0);
