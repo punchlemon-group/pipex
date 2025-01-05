@@ -6,7 +6,7 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 05:28:42 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/05 08:21:17 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:00:00 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,9 @@
 # include "libft.h"
 # include "ft_printf.h"
 
-typedef struct s_path
-{
-	char	*path;
-}	t_path;
-
-int		paths_init(char ***paths, char *str);
-void	print_paths(char **paths);
-char	*find_path(char *cmd, char **paths);
+int		path_dirs_init(char ***path_dirs_p, char *str);
+void	delete_path_dirs(char **path_dirs);
+void	print_path_dirs(char **path_dirs);
+char	*find_path(const char *cmd, char **path_dirs);
 
 #endif
