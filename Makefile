@@ -21,6 +21,7 @@ SRCS = \
 $(addsuffix .c, \
 	$(addprefix $(SRCS_DIR)/, \
 		env \
+		exe \
 		main \
 		path \
 	) \

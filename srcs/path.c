@@ -6,18 +6,21 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 05:23:22 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/05 14:54:24 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/06 07:14:20 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "path.h"
+#include "exe.h"
 
-int	path_dirs_init(char ***path_dirs_p, char *str)
+int		path_dirs_init(char ***path_dirs_p, char *str)
 {
+	if (str == NULL)
+		return (*path_dirs_p = NULL, PATH_SUCCESS);
 	*path_dirs_p = ft_split(str, ':');
-	if (!*path_dirs_p)
-		return (1);
-	return (0);
+	if (*path_dirs_p == NULL)
+		return (PATH_FAILURE);
+	return (PATH_SUCCESS);
 }
 
 void	delete_path_dirs(char **path_dirs)
@@ -33,23 +36,6 @@ void	delete_path_dirs(char **path_dirs)
 		i++;
 	}
 	free(path_dirs);
-}
-
-void	print_path_dirs(char **path_dirs)
-{
-	int	i;
-
-	if (path_dirs == NULL)
-		return ;
-	i = 0;
-	while (path_dirs[i])
-	{
-		if (i > 0)
-			ft_printf(", ");
-		ft_printf("%s", path_dirs[i]);
-		i++;
-	}
-	ft_printf("\n");
 }
 
 char	*join_path(char *path_dir, const char *cmd)
@@ -72,47 +58,67 @@ char	*join_path(char *path_dir, const char *cmd)
 	return (path);
 }
 
-int	check_path(char **old_p, char **new_p, char *path_dir, const char *cmd)
+int		check_path(char **new_p, char **old_p, const char *cmd, char *path_dir)
 {
 	*new_p = join_path(path_dir, cmd);
 	if (*new_p == NULL)
-		return (free(*old_p), 1); // handle malloc failure gracefully
+		return (free(*old_p), MALLOC_FAILURE);
 	if (access(*new_p, F_OK) == 0)
 	{
 		if (access(*new_p, X_OK) == 0)
-			return (free(*old_p), 1);
+			return (free(*old_p), EXECUTABLE);
 		else if (*old_p == NULL)
 			*old_p = *new_p;
 		else
 			free(*new_p);
+		return (PERMISSION_DENIED);
 	}
-	else
-		free(*new_p);
-	return (0);
+	free(*new_p);
+	return (COMMAND_NOT_FOUND);
 }
 
-char	*find_path(const char *cmd, char **path_dirs)
+int		find_path(char **pathname_p, const char *cmd, char **path_dirs)
 {
 	int		i;
 	char	*new;
 	char	*old;
+	int		tmp;
+	int		result;
 
 	if (access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0 && ft_strchr(cmd, '/'))
-	{
-		new = ft_strdup(cmd);
-		if (new == NULL)
-			exit(1); // you should free resources
-		return (new);
-	}
+		return (*pathname_p = ft_strdup(cmd), EXECUTABLE);
 	if (path_dirs == NULL)
-		return (NULL);
+		return (*pathname_p = NULL, COMMAND_NOT_FOUND);
+	result = COMMAND_NOT_FOUND;
 	old = NULL;
 	i = 0;
 	while (path_dirs[i])
 	{
-		if (check_path(&old, &new, path_dirs[i], cmd))
-			return (new);
+		tmp = check_path(&new, &old, cmd, path_dirs[i]);
+		if (tmp == MALLOC_FAILURE)
+			return (*pathname_p = NULL, MALLOC_FAILURE);
+		if (tmp == EXECUTABLE)
+			return (*pathname_p = new, EXECUTABLE);
+		else if (tmp == PERMISSION_DENIED)
+			result = tmp;
 		i++;
 	}
-	return (old);
+	return (*pathname_p = old, result);
 }
+
+// void	print_path_dirs(char **path_dirs)
+// {
+// 	int	i;
+
+// 	if (path_dirs == NULL)
+// 		return ;
+// 	i = 0;
+// 	while (path_dirs[i])
+// 	{
+// 		if (i > 0)
+// 			ft_printf(", ");
+// 		ft_printf("%s", path_dirs[i]);
+// 		i++;
+// 	}
+// 	ft_printf("\n");
+// }
