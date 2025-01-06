@@ -6,7 +6,7 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:12:30 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/05 14:54:51 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/06 01:44:02 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,15 @@ int	main(int argc, char **argv, char **envp)
 		pipex_end(&data, argv[1], EXIT_FAILURE);
 	path = find_path(argv[2], data.path_dirs);
 	if (path == NULL)
-		pipex_end(&data, "pipex", EXIT_FAILURE);
-	ft_printf("path:%s\n", path);
-	free(path);
-	make_child(&data);
+	{
+		ft_printf("Command '%s' not found\n", argv[2]);
+	}
+	else
+	{
+		ft_printf("path:%s\n", path);
+		free(path);
+		make_child(&data);
+	}
 	close(fd);
 	return (pipex_end(&data, NULL, EXIT_SUCCESS), EXIT_SUCCESS);
 }
