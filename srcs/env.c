@@ -6,7 +6,7 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 18:12:27 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/06 06:50:32 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/06 16:27:45 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	delete_env_content(void *void_env_content)
 	}
 }
 
-int		env_list_init(t_list **env_list_p, char **envp)
+int	env_list_init(t_list **env_list_p, char **envp)
 {
 	void	*void_env_content;
 	t_list	*new;

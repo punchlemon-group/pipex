@@ -6,7 +6,7 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:12:30 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/06 07:24:43 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/06 16:32:09 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	set_args(t_args *args, int argc, const char **argv, char **envp)
 	args->envp = envp;
 }
 
-int		main(int argc, const char **argv, char **envp)
+int	main(int argc, const char **argv, char **envp)
 {
 	int		fd;
 	t_env	*path_env;

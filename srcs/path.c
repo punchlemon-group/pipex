@@ -6,14 +6,14 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 05:23:22 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/06 07:25:44 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/06 16:28:11 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "path.h"
 #include "exarg.h"
 
-int		path_dirs_init(char ***path_dirs_p, char *str)
+int	path_dirs_init(char ***path_dirs_p, char *str)
 {
 	if (str == NULL)
 		return (*path_dirs_p = NULL, PATH_SUCCESS);
@@ -58,7 +58,7 @@ char	*join_path(char *path_dir, const char *cmd)
 	return (path);
 }
 
-int		check_path(char **new_p, char **old_p, const char *cmd, char *path_dir)
+int	check_path(char **new_p, char **old_p, const char *cmd, char *path_dir)
 {
 	*new_p = join_path(path_dir, cmd);
 	if (*new_p == NULL)
@@ -77,7 +77,7 @@ int		check_path(char **new_p, char **old_p, const char *cmd, char *path_dir)
 	return (COMMAND_NOT_FOUND);
 }
 
-int		find_path(char **pathname_p, const char *cmd, char **path_dirs)
+int	find_path(char **pathname_p, const char *cmd, char **path_dirs)
 {
 	int		i;
 	char	*new;

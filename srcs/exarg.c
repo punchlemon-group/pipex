@@ -6,7 +6,7 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 02:57:08 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/06 07:24:06 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/06 16:29:16 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	delete_exarg_content(void *void_exarg_content)
 	}
 }
 
-int		exarg_list_init(t_list **exarg_list_p, t_args *args, char **path_dirs)
+int	exarg_list_init(t_list **exarg_list_p, t_args *args, char **path_dirs)
 {
 	void	*void_exarg_content;
 	t_list	*new;
@@ -70,7 +70,7 @@ int		exarg_list_init(t_list **exarg_list_p, t_args *args, char **path_dirs)
 	while (i < len)
 	{
 		void_exarg_content = create_exarg_content(args->argv[argv_offset + i],
-			path_dirs, args->envp);
+				path_dirs, args->envp);
 		if (void_exarg_content == NULL)
 			return (EXARG_FAILURE);
 		new = ft_lstnew(void_exarg_content);
