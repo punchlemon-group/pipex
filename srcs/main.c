@@ -6,14 +6,11 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:12:30 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/06 07:17:11 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/06 07:24:43 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include "env.h"
-#include "path.h"
-#include "exe.h"
 
 void	pipex_end(t_data *data, const char *error_str, int status)
 {
@@ -76,7 +73,7 @@ int		main(int argc, const char **argv, char **envp)
 	if (path_dirs_init(&data.path_dirs, path_env->str) == PATH_FAILURE)
 		pipex_end(&data, "malloc", EXIT_FAILURE);
 	if (exarg_list_init(&data.exarg_list, &data.args, data.path_dirs)
-		== EXE_FAILURE)
+		== EXARG_FAILURE)
 		pipex_end(&data, "malloc", EXIT_FAILURE);
 	list = data.exarg_list;
 	while (list != NULL)

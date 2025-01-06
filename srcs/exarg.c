@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exe.c                                              :+:      :+:    :+:   */
+/*   exarg.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 02:57:08 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/06 07:17:45 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/06 07:24:06 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exe.h"
+#include "exarg.h"
 #include "path.h"
 
 void	*create_exarg_content(const char *cmd, char **path_dirs, char **envp)
@@ -63,7 +63,7 @@ int		exarg_list_init(t_list **exarg_list_p, t_args *args, char **path_dirs)
 
 	*exarg_list_p = NULL;
 	if (args->argc < 5)
-		return (write(2, "arguments is too short\n", 23), EXE_FAILURE);
+		return (write(2, "arguments is too short\n", 23), EXARG_FAILURE);
 	argv_offset = 2;
 	len = args->argc - 3;
 	i = 0;
@@ -72,14 +72,14 @@ int		exarg_list_init(t_list **exarg_list_p, t_args *args, char **path_dirs)
 		void_exarg_content = create_exarg_content(args->argv[argv_offset + i],
 			path_dirs, args->envp);
 		if (void_exarg_content == NULL)
-			return (EXE_FAILURE);
+			return (EXARG_FAILURE);
 		new = ft_lstnew(void_exarg_content);
 		if (new == NULL)
-			return (delete_exarg_content(void_exarg_content), EXE_FAILURE);
+			return (delete_exarg_content(void_exarg_content), EXARG_FAILURE);
 		ft_lstadd_back(exarg_list_p, new);
 		i++;
 	}
-	return (EXE_SUCCESS);
+	return (EXARG_SUCCESS);
 }
 
 void	print_exarg_content(t_exarg *exarg_content)

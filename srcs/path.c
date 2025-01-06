@@ -6,12 +6,12 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 05:23:22 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/06 07:14:20 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/06 07:25:44 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "path.h"
-#include "exe.h"
+#include "exarg.h"
 
 int		path_dirs_init(char ***path_dirs_p, char *str)
 {

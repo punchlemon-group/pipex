@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exe.h                                              :+:      :+:    :+:   */
+/*   exarg.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 02:50:36 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/06 06:55:38 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/06 07:23:30 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXE_H
-# define EXE_H
-# define EXE_FAILURE -1
-# define EXE_SUCCESS 0
+#ifndef EXARG_H
+# define EXARG_H
+# define EXARG_FAILURE -1
+# define EXARG_SUCCESS 0
 # include "libft.h"
 # include "ft_printf.h"
 

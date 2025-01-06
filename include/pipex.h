@@ -6,7 +6,7 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 18:14:23 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/06 06:58:00 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/06 07:25:16 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 # include <unistd.h> // fork access read write execve
 # include "libft.h"
 # include "env.h"
-# include "exe.h"
+# include "path.h"
+# include "exarg.h"
 
 typedef struct s_data
 {
