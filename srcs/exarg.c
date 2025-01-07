@@ -6,7 +6,7 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 02:57:08 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/07 03:59:47 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/07 05:15:48 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int	exarg_list_init(t_list **exarg_list_p, t_args *args, char **path_dirs)
 	size_t	len;
 
 	*exarg_list_p = NULL;
-	if (args->argc < 5)
-		return (write(2, "arguments is too short\n", 23), EXARG_FAILURE);
+	if (args->argc < 4)
+		return (EXARG_SUCCESS);
 	argv_offset = 2;
 	len = args->argc - 3;
 	i = 0;

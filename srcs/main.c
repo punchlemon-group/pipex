@@ -6,7 +6,7 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:12:30 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/07 04:43:53 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/07 05:17:01 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	main(int argc, const char **argv, char **envp)
 	t_list	*list;
 	// char	*path;
 
+	// if (argc < 5)
+	// 	return (write(2, "arguments is too short\n", 23), 0);
 	set_args(&data.args, argc, argv, envp);
 	set_zero(&data);
 	if (env_list_init(&data.env_list, envp) == ENV_FAILURE)
