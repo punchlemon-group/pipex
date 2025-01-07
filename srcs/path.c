@@ -6,18 +6,18 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 05:23:22 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/06 16:28:11 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/07 04:43:28 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "path.h"
 #include "exarg.h"
 
-int	path_dirs_init(char ***path_dirs_p, char *str)
+int	path_dirs_init(char ***path_dirs_p, t_env *env)
 {
-	if (str == NULL)
+	if (env == NULL || env->str == NULL)
 		return (*path_dirs_p = NULL, PATH_SUCCESS);
-	*path_dirs_p = ft_split(str, ':');
+	*path_dirs_p = ft_split(env->str, ':');
 	if (*path_dirs_p == NULL)
 		return (PATH_FAILURE);
 	return (PATH_SUCCESS);

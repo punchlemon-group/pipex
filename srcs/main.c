@@ -6,7 +6,7 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:12:30 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/06 16:32:09 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/07 04:43:53 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,23 @@ void	set_args(t_args *args, int argc, const char **argv, char **envp)
 
 int	main(int argc, const char **argv, char **envp)
 {
-	int		fd;
-	t_env	*path_env;
 	t_data	data;
-	t_list	*list;
+
 	t_exarg	*exarg_content;
+	t_list	*list;
 	// char	*path;
 
 	set_args(&data.args, argc, argv, envp);
 	set_zero(&data);
 	if (env_list_init(&data.env_list, envp) == ENV_FAILURE)
 		pipex_end(&data, "malloc", EXIT_FAILURE);
-	path_env = search_env_list(data.env_list, "PATH");
-	if (path_dirs_init(&data.path_dirs, path_env->str) == PATH_FAILURE)
+	if (path_dirs_init(&data.path_dirs, search_env_list(data.env_list, "PATH"))
+		== PATH_FAILURE)
 		pipex_end(&data, "malloc", EXIT_FAILURE);
 	if (exarg_list_init(&data.exarg_list, &data.args, data.path_dirs)
 		== EXARG_FAILURE)
 		pipex_end(&data, "malloc", EXIT_FAILURE);
+
 	list = data.exarg_list;
 	while (list != NULL)
 	{
@@ -82,9 +82,10 @@ int	main(int argc, const char **argv, char **envp)
 		print_exarg_content(exarg_content);
 		list = list->next;
 	}
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-		pipex_end(&data, argv[1], EXIT_FAILURE);
+
+	// fd = open(argv[1], O_RDONLY);
+	// if (fd == -1)
+	// 	pipex_end(&data, argv[1], EXIT_FAILURE);
 
 	// path = find_path(argv[2], data.path_dirs);
 	// if (path == NULL)
@@ -96,6 +97,6 @@ int	main(int argc, const char **argv, char **envp)
 	// 	free(path);
 	// 	make_child(&data);
 	// }
-	close(fd);
+	// close(fd);
 	return (pipex_end(&data, NULL, EXIT_SUCCESS), EXIT_SUCCESS);
 }

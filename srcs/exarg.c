@@ -6,7 +6,7 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 02:57:08 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/06 16:29:16 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/07 03:59:47 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,18 @@ int	exarg_list_init(t_list **exarg_list_p, t_args *args, char **path_dirs)
 
 void	print_exarg_content(t_exarg *exarg_content)
 {
+	ft_printf("status:");
+	if (exarg_content->status == MALLOC_FAILURE)
+		ft_printf("malloc failure   ");
+	else if (exarg_content->status == COMMAND_NOT_FOUND)
+		ft_printf("command not found");
+	else if (exarg_content->status == PERMISSION_DENIED)
+		ft_printf("permission denied");
+	else if (exarg_content->status == EXECUTABLE)
+		ft_printf("executable       ");
 	if (exarg_content != NULL)
 	{
-		ft_printf("pathname:%s\n", exarg_content->pathname);
+		ft_printf(", pathname:%s\n", exarg_content->pathname);
 	}
 	else
 		ft_printf("(NULL)\n");
