@@ -6,7 +6,7 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 02:57:08 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/07 05:15:48 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/07 05:55:52 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*create_exarg_content(const char *cmd, char **path_dirs, char **envp)
 	argv[1] = NULL;
 	exarg_content->argv = argv;
 	exarg_content->envp = envp;
-	exarg_content->status = find_path(&exarg_content->pathname, cmd, path_dirs);
+	exarg_content->status = find_path(&exarg_content->path, cmd, path_dirs);
 	return ((void *)exarg_content);
 }
 
@@ -47,29 +47,24 @@ void	delete_exarg_content(void *void_exarg_content)
 			free(exarg_content->argv);
 		}
 		if (exarg_content->status != MALLOC_FAILURE
-			&& exarg_content->pathname != NULL)
-			free(exarg_content->pathname);
+			&& exarg_content->path != NULL)
+			free(exarg_content->path);
 		free(exarg_content);
 	}
 }
 
-int	exarg_list_init(t_list **exarg_list_p, t_args *args, char **path_dirs)
+int	exarg_list_init(t_list **exarg_list_p, t_args *args, char **path_dirs,
+	int *i)
 {
 	void	*void_exarg_content;
 	t_list	*new;
-	size_t	i;
-	size_t	argv_offset;
-	size_t	len;
 
 	*exarg_list_p = NULL;
 	if (args->argc < 4)
 		return (EXARG_SUCCESS);
-	argv_offset = 2;
-	len = args->argc - 3;
-	i = 0;
-	while (i < len)
+	while (*i < args->argc - 1)
 	{
-		void_exarg_content = create_exarg_content(args->argv[argv_offset + i],
+		void_exarg_content = create_exarg_content(args->argv[*i],
 				path_dirs, args->envp);
 		if (void_exarg_content == NULL)
 			return (EXARG_FAILURE);
@@ -77,7 +72,7 @@ int	exarg_list_init(t_list **exarg_list_p, t_args *args, char **path_dirs)
 		if (new == NULL)
 			return (delete_exarg_content(void_exarg_content), EXARG_FAILURE);
 		ft_lstadd_back(exarg_list_p, new);
-		i++;
+		(*i)++;
 	}
 	return (EXARG_SUCCESS);
 }
@@ -95,7 +90,7 @@ void	print_exarg_content(t_exarg *exarg_content)
 		ft_printf("executable       ");
 	if (exarg_content != NULL)
 	{
-		ft_printf(", pathname:%s\n", exarg_content->pathname);
+		ft_printf(", pathname:%s\n", exarg_content->path);
 	}
 	else
 		ft_printf("(NULL)\n");

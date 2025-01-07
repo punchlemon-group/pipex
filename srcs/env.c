@@ -6,7 +6,7 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 18:12:27 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/06 16:27:45 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/07 07:06:29 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_env	*search_env_list(t_list *env_list, char *var)
 	while (env_list != NULL)
 	{
 		env_content = (t_env *)env_list->content;
-		if (ft_strncmp(env_content->var, var, ft_strlen(var)) == 0)
+		if (ft_strncmp(env_content->var, var, ft_strlen(var) + 1) == 0)
 			return (env_content);
 		env_list = env_list->next;
 	}
