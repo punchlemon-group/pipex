@@ -6,13 +6,13 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 18:14:23 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/08 05:16:32 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/08 10:53:56 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
-# define ERR_OUT 2
+# include <stdio.h> // perror
 # include <fcntl.h> // open
 # include <stdlib.h> // exit
 # include <sys/types.h> // pid_t

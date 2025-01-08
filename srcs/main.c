@@ -6,16 +6,19 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 10:12:30 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/08 05:51:14 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/08 13:35:02 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h> // perror
 #include "pipex.h"
 
-void	execute_child(t_exarg *exarg_content)
+void	execute_child(t_data *data, t_exarg *exarg_content)
 {
 	execve(exarg_content->path, exarg_content->argv, exarg_content->envp);
-	exit(errno);
+	ft_dprintf(STDERR_FILENO, "pipex: ");
+	perror(exarg_content->path);
+	pipex_end(data, NULL, errno);
 }
 
 void	execute_parent(pid_t pid, t_data *data, t_exarg *exarg_content)
@@ -23,6 +26,7 @@ void	execute_parent(pid_t pid, t_data *data, t_exarg *exarg_content)
 	int	wstatus;
 	int	exit_status;
 
+	(void)exarg_content;
 	if (waitpid(pid, &wstatus, 0) == -1)
 		pipex_end(data, "waitpid failed", EXIT_FAILURE);
 	if (WIFEXITED(wstatus))
@@ -30,13 +34,13 @@ void	execute_parent(pid_t pid, t_data *data, t_exarg *exarg_content)
 		exit_status = WEXITSTATUS(wstatus);
 		if (exit_status == EACCES)
 		{
-			ft_dprintf(ERR_OUT, "pipex: ");
-			pipex_end(data, exarg_content->path, PERMISSION_DENIED_STATUS);
+			pipex_end(data, NULL, PERMISSION_DENIED_STATUS);
 		}
 	}
+	// parent cant get here because signal sent to parent too.
 	else if (WIFSIGNALED(wstatus))
 	{
-		ft_dprintf(ERR_OUT, "terminated:%d\n", WTERMSIG(wstatus));
+		ft_dprintf(STDERR_FILENO, "terminated:%d\n", WTERMSIG(wstatus));
 	}
 }
 
@@ -46,7 +50,7 @@ void	fork_process(t_data *data, t_exarg *exarg_content)
 
 	if (exarg_content->path == NULL)
 	{
-		ft_dprintf(ERR_OUT, "Command '%s' not found\n", exarg_content->argv[0]);
+		ft_dprintf(STDERR_FILENO, "%s: command not found\n", exarg_content->argv[0]);
 		// pipex_end(data, NULL, PERMISSION_DENIED_STATUS);
 	}
 	else
@@ -55,7 +59,7 @@ void	fork_process(t_data *data, t_exarg *exarg_content)
 		if (pid == -1)
 			pipex_end(data, "fork", EXIT_FAILURE);
 		else if (pid == 0)
-			execute_child(exarg_content);
+			execute_child(data, exarg_content);
 		else
 			execute_parent(pid, data, exarg_content);
 	}
@@ -79,7 +83,7 @@ int	main(int argc, const char **argv, char **envp)
 	int	i;
 
 	// if (argc < 5)
-	// 	return (ft_dprintf(ERR_OUT, "arguments is too short\n"), 0);
+	// 	return (ft_dprintf(STDERR_FILENO, "arguments is too short\n"), 0);
 	preprocess(&data, argc, argv, envp);
 
 	i = 1;
