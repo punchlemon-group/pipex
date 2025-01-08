@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   preprocess.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 18:14:23 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/08 05:16:32 by retanaka         ###   ########.fr       */
+/*   Created: 2025/01/08 05:17:31 by retanaka          #+#    #+#             */
+/*   Updated: 2025/01/08 05:20:21 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
-# define ERR_OUT 2
-# include <fcntl.h> // open
-# include <stdlib.h> // exit
-# include <sys/types.h> // pid_t
-# include <sys/wait.h> // waitpid
-# include <unistd.h> // fork access read write execve
-# include <errno.h> // errno
-# include "libft.h"
-# include "ft_dprintf.h"
+#ifndef PREPROCESS_H
+# define PREPROCESS_H
 # include "pipex_end.h"
-# include "t_data.h"
-# include "e_return.h"
+# include "env.h"
+# include "path.h"
 
-void	preprocess(t_data *data, int argc, const char **argv, char **envp);
-
-#endif 
+#endif

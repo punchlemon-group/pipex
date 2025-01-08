@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   ft_dprintf_base.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 18:13:11 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/08 05:03:36 by retanaka         ###   ########.fr       */
+/*   Created: 2024/05/10 13:53:02 by retanaka          #+#    #+#             */
+/*   Updated: 2025/01/07 10:00:43 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
-# include "libft.h"
-# include "ft_printf.h"
-# include "e_return.h"
-# include "t_env.h"
+#include "ft_dprintf.h"
 
-void	*create_env_content(char *envp_single);
-t_env	*search_env_list(t_list *envs, char *var);
-int		env_list_init(t_list **envsp, char **envp);
-void	print_env_content(t_env *env_content);
-void	delete_env_content(void *void_env_content);
+int	ft_dputchar(int fd, char c)
+{
+	return (write(fd, &c, 1));
+}
 
-#endif
+int	ft_dputstr(int fd, char *s)
+{
+	size_t	i;
+
+	if (s == NULL)
+		return (write(fd, "(null)", 6));
+	i = -1;
+	while (*(s + ++i) != '\0')
+		;
+	return (write(fd, s, i));
+}

@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   t_data.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 18:13:11 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/08 05:03:36 by retanaka         ###   ########.fr       */
+/*   Created: 2025/01/08 03:35:21 by retanaka          #+#    #+#             */
+/*   Updated: 2025/01/08 03:36:30 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#ifndef T_DATA_H
+# define T_DATA_H
 # include "libft.h"
-# include "ft_printf.h"
-# include "e_return.h"
-# include "t_env.h"
+# include "exarg.h"
 
-void	*create_env_content(char *envp_single);
-t_env	*search_env_list(t_list *envs, char *var);
-int		env_list_init(t_list **envsp, char **envp);
-void	print_env_content(t_env *env_content);
-void	delete_env_content(void *void_env_content);
+typedef struct s_data
+{
+	t_args	args;
+	t_list	*env_list;
+	char	**path_dirs;
+	t_list	*exarg_list;
+	int		i_fd;
+	int		o_fd;
+}	t_data;
 
 #endif

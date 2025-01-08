@@ -4,6 +4,13 @@
 		"pipex.h": "c",
 		"env.h": "c",
 		"libft.h": "c",
-		"stdlib.h": "c"
+		"stdlib.h": "c",
+		"ft_dprintf.h": "c",
+		"path.h": "c",
+		"t_env.h": "c",
+		"stdbool.h": "c",
+		"ft_printf.h": "c",
+		"exarg.h": "c",
+		"e_return.h": "c"
 	}
 }

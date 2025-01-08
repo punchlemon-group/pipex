@@ -6,7 +6,7 @@
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 18:12:27 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/07 07:06:29 by retanaka         ###   ########.fr       */
+/*   Updated: 2025/01/08 05:03:48 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,14 @@ int	env_list_init(t_list **env_list_p, char **envp)
 	{
 		void_env_content = create_env_content(envp[i]);
 		if (void_env_content == NULL)
-			return (ENV_FAILURE);
+			return (MALLOC_FAILURE);
 		new = ft_lstnew(void_env_content);
 		if (new == NULL)
-			return (delete_env_content(void_env_content), ENV_FAILURE);
+			return (delete_env_content(void_env_content), MALLOC_FAILURE);
 		ft_lstadd_back(env_list_p, new);
 		i++;
 	}
-	return (ENV_SUCCESS);
+	return (SUCCESS);
 }
 
 t_env	*search_env_list(t_list *env_list, char *var)

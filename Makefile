@@ -6,6 +6,8 @@ LIBFT_A = libft.a
 
 INCLUDE_DIR = include
 SRCS_DIR = srcs
+FT_DPRINTF_DIR = ft_dprintf
+PATH_DIR = path
 OUT_DIR = out
 
 RESET = \033[0m
@@ -20,10 +22,25 @@ WHITE = \033[37m
 SRCS = \
 $(addsuffix .c, \
 	$(addprefix $(SRCS_DIR)/, \
+		$(addprefix $(FT_DPRINTF_DIR)/, \
+			ft_dprintf_base_check \
+			ft_dprintf_base \
+			ft_dprintf \
+			ft_dputdec \
+			ft_dputhex \
+			ft_dputnumber_base \
+			ft_dputoct \
+			ft_dputptr \
+		) \
+		$(addprefix $(PATH_DIR)/, \
+			get_executable_path \
+			path \
+		) \
 		env \
 		exarg \
 		main \
-		path \
+		pipex_end \
+		preprocess \
 	) \
 ) \
 

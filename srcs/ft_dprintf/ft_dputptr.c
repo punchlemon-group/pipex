@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   ft_dputptr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: retanaka <retanaka@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 18:13:11 by retanaka          #+#    #+#             */
-/*   Updated: 2025/01/08 05:03:36 by retanaka         ###   ########.fr       */
+/*   Created: 2024/05/10 14:20:07 by retanaka          #+#    #+#             */
+/*   Updated: 2025/01/07 10:16:21 by retanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
-# include "libft.h"
-# include "ft_printf.h"
-# include "e_return.h"
-# include "t_env.h"
+#include "ft_dprintf.h"
 
-void	*create_env_content(char *envp_single);
-t_env	*search_env_list(t_list *envs, char *var);
-int		env_list_init(t_list **envsp, char **envp);
-void	print_env_content(t_env *env_content);
-void	delete_env_content(void *void_env_content);
+int	ft_dputptr_check(int fd, unsigned long long p, int *count)
+{
+	t_form	f;
 
-#endif
+	ft_dputstr_check(fd, "0x", count);
+	if (*count == -1)
+		return (*count);
+	f.fmt = 'p';
+	f.base = 16;
+	ft_dputnumber_check(fd, p, f, count);
+	return (*count);
+}
